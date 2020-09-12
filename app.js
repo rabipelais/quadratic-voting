@@ -9,11 +9,16 @@ var creatorRouter = require('./routes/create');
 var resultRouter = require('./routes/result');
 var voteRouter = require('./routes/vote');
 
+var bodyParser = require('body-parser');
+
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+//app.use(bodyParser.json()); // support json encoded bodies
+//app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -41,5 +46,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+var route, routes = [];
 
 module.exports = app;
