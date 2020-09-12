@@ -1,26 +1,40 @@
 extends layout
 
 block content
-  h1= title
-  p
-      span(class="add") Add statement
-  form
-    p
-        label
-                | Statement:
-                input(type="text")
-        span(class="remove") Remove
-    p
-        label
-                | Token amount:
-                input(type="text")
+    h1= title
+    
+    form
+        .form-group.row
+            label.col-form-label.col-sm-2(for="inputTitle") Election Title:
+            .col-sm-4
+                input(type="text", class="form-control", id="inputTitle", placeholder="Title")
 
-  script.
+        .form-group.row
+            button.btn.btn-outline-secondary.add Add Statement
+        
+        .form-group.row.statement
+            .col-sm-8
+                input(type="text", class="form-control", id="inputStatement", placeholder="New Statement")
+            button.btn.btn-danger.remove Delete
+            
+        .form-group.row
+            label.col-form-label.col-sm-2(for="inputAmount") Token Amount:
+            .col-sm-4
+                input(type="number", class="form-control", id="inputAmount", placeholder="Amount")
+                
+        button(type="submit", class="btn btn-primary") Create Election
+                
+            
+    script.
         $(".add").click(function() {
-          $("form > p:first-child").clone(true).insertBefore("form > p:last-child");
+          $(".statement:first").clone(true).insertBefore(".form-group:last");
           return false;
         });
 
         $(document).on('click', '.remove', function() {
-          $(this).parent().remove();
+          if($(".statement").length > 1) {
+              $(this).parent().remove();
+          } else {
+              return false;
+          }
         });  
