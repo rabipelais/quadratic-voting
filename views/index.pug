@@ -2,4 +2,12 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  h2 Current Elections
+  //Here dynamic list with elections
+  ul.list-group
+    il.list-group-item
+      p(style='float: left') Test Election
+      span(style='float: right')
+        a(class='btn') Delete
+  p
+    a(class='btn btn-outline-secondary', href='#', role='button') Create New Election

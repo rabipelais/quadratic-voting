@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1= title
+  p
+      span(class="add") Add statement
+  form
+    p
+        label
+                | Statement:
+                input(type="text")
+        span(class="remove") Remove
+    p
+        label
+                | Token amount:
+                input(type="text")
+
+  script.
+        $(".add").click(function() {
+          $("form > p:first-child").clone(true).insertBefore("form > p:last-child");
+          return false;
+        });
+
+        $(document).on('click', '.remove', function() {
+          $(this).parent().remove();
+        });  
