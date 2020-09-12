@@ -1,13 +1,16 @@
 extends layout
 
 block content
-  h1= title
-  h2 Current Elections
-  //Here dynamic list with elections
-  ul.list-group
-    il.list-group-item
-      p(style='float: left') Test Election
-      span(style='float: right')
-        a(class='btn') Delete
-  p
-    a(class='btn btn-outline-secondary', href='/election/create', role='button') Create New Election
+    h1= title
+    h2 Current Elections
+    
+    //Here dynamic list with elections
+    ul.list-group
+        each election in elections
+            il.list-group-item
+                - const link = "elections/vote/" + election.id
+                a(href=link)= election.doc.inputTitle
+                span(style='float: right')
+                    a(class='btn') Delete
+    p
+        a(class='btn btn-outline-secondary', href='/election/create', role='button') Create New Election

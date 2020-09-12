@@ -16,7 +16,6 @@ exports.new_election = function(doc, doc_name, done) {
         console.log("Inserting " + doc_name);
         if (!err) {
             console.log("Created!");
-            
             console.log(body);
            return done(null, doc);
         } else {
@@ -24,6 +23,17 @@ exports.new_election = function(doc, doc_name, done) {
             console.log(err);
             console.log(body);
            return done("Error inserting new element.");
+        }
+    });
+};
+
+exports.list_elections = function(done) {
+    elections.list({include_docs:true}, function(err, body) {
+        if(!err) {
+            body.rows.forEach(function(doc) {
+                console.log(doc);
+            });
+            done(body.rows);
         }
     });
 };
