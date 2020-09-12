@@ -8,7 +8,7 @@ block content
     ul.list-group
         each election in elections
             il.list-group-item
-                - const link = "elections/vote/" + election.id
+                - const link = "election/vote/" + election.id
                 a(href=link)= election.doc.inputTitle
                 span(style='float: right')
                     a(class='btn') Delete

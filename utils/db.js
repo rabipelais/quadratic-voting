@@ -37,3 +37,15 @@ exports.list_elections = function(done) {
         }
     });
 };
+
+exports.get_election = function(id, done) {
+    elections.get(id, function(err, body) {
+        if(!err) {
+            console.log("Fetched: ");
+            console.log(body);
+            done(body);
+        } else {
+            console.log("Failed fetching.");
+        }
+    });
+};
