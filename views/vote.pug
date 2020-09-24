@@ -4,37 +4,37 @@ block content
     h1= title
     h2= election_name
 
-    form
+    form(method="post", action="/election/vote")
         h4 Personal Info
 
         .form-row
             .form-group.col-md-6
                 label(for="inputName") Name
-                input(type="text", class="form-control", id="inputName", placeholder="Name")
+                input(type="text", class="form-control", name="inputName", id="inputName", placeholder="Name")
                 
             .form-group.col-md-6
                 label(for="inputOrientation") Sexual Orientation
-                input(type="text", class="form-control", id="inputOrientation", placeholder="Sexual Orientation")
+                input(type="text", class="form-control", name="inputOrientation", id="inputOrientation", placeholder="Sexual Orientation")
         .form-row
             .form-group.col-md-6
                 label(for="inputAge") Age
-                input(type="text", class="form-control", id="inputAge", placeholder="Age")
+                input(type="text", class="form-control", name="inputAge", id="inputAge", placeholder="Age")
                 
             .form-group.col-md-6
                 label(for="inputOccupation") Occupation
-                input(type="text", class="form-control", id="inputOccupation", placeholder="Occupation")
+                input(type="text", class="form-control", name="inputOccupation", id="inputOccupation", placeholder="Occupation")
         .form-row
             .form-group.col-md-6
                 label(for="inputGender") Gender
-                input(type="text", class="form-control", id="inputGender", placeholder="Gender")
+                input(type="text", class="form-control", name="inputGender", id="inputGender", placeholder="Gender")
                 
             .form-group.col-md-6
                 label(for="inputPolitical") Political Orientation
-                input(type="text", class="form-control", id="inputPolitical", placeholder="Political Orientation")
+                input(type="text", class="form-control", name="inputPolitical", id="inputPolitical", placeholder="Political Orientation")
         
         .form-group
             label(for="inputNationality") Nationality
-            input(type="text", class="form-control", id="inputNationality", placeholder="Nationality")
+            input(type="text", class="form-control", name="inputPolitical", id="inputNationality", placeholder="Nationality")
 
 
         h4 1 Person - 1 Vote
@@ -43,24 +43,34 @@ block content
                 .form-group.col-8
                     label= statement
                 .form-check.form-check-inline
-                    input.form-check-input(type="radio", name="S1Options", id="inlineCheckbox1", value="option1")
+                    input.form-check-input(type="radio", name="1VoteOptions", id="inlineCheckbox1", value="option1")
                     label.form-check-label(for="inlineCheckbox1") Y
                 .form-check.form-check-inline
-                    input.form-check-input(type="radio", name="S1Options", id="inlineCheckbox2", value="option2")
+                    input.form-check-input(type="radio", name="1VoteOptions", id="inlineCheckbox2", value="option2")
                     label.form-check-label(for="inlineCheckbox2") N
                 
         h4 Quadratic Voting
-        h5 Available Tokens: #{input_amount}
+        - var curr_tokens_txt = input_amount
+        h5 Available Tokens: 
+          span#curr_tokens #{curr_tokens_txt}
+          span  / #{input_amount}
         each statement in statements
-            .form-row
+            .row
                 .form-group.col-6
                     label= statement
-                .input-group.col-1
-                    .input-group-prepend
-                        button(class="btn btn-outline-secondary", type="button", id="button-addon1") +
-                    input(type="text", class="form-control", placeholder="")
-                    .input-group-append
-                        button(class="btn btn-outline-secondary", type="button", id="button-addon1") -
+                .form-group.col-1
+                    input.quadratic-voter(type="number", name="QuadraticVote", class="form-control", placeholder="0")
 
         
         button(type="submit", class="btn btn-primary") Submit
+
+    script.
+        $(".quadratic-voter").on('input', function () {
+          var curr = $(this).val();
+          if(!(isNaN(curr)) && curr != '') {
+              //alert("Saving value " + $(this).val() + ". Previous value "  + $(this).data('previous-val'));
+              $(this).data('previous-val', $(this).val());
+              //$('#curr_tokens').text($('#curr_tokens').text() - 1);
+          }
+        });
+	
