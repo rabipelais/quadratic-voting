@@ -5,11 +5,22 @@ nano.db.create('elections', function(err, body) {
   if (!err) {
       console.log('database elections created!');
   } else {
+      console.log('ERROR: creating database elections!');
+      console.log(err);
+  }
+});
+
+nano.db.create('votes', function(err, body) {
+  if (!err) {
+      console.log('database votes created!');
+  } else {
+      console.log('ERROR: creating database votes!');
       console.log(err);
   }
 });
 
 var elections = nano.db.use('elections');
+var votes = nano.db.use('votes');
 
 exports.new_election = function(doc, doc_name, done) {
     elections.insert(doc, uuidv4(), function(err, body) {
@@ -46,6 +57,22 @@ exports.get_election = function(id, done) {
             done(body);
         } else {
             console.log("Failed fetching.");
+        }
+    });
+};
+
+exports.new_vote = function(doc, doc_name, done) {
+    votes.insert(doc, uuidv4(), function(err, body) {
+        console.log("Inserting " + doc_name);
+        if (!err) {
+            console.log("Created!");
+            console.log(body);
+           return done(null, doc);
+        } else {
+            console.log("failed");
+            console.log(err);
+            console.log(body);
+           return done("Error inserting new element.");
         }
     });
 };

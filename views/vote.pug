@@ -54,23 +54,54 @@ block content
         h5 Available Tokens: 
           span#curr_tokens #{curr_tokens_txt}
           span  / #{input_amount}
+          
+        .div
+            .row
+                .col-6
+                    h6 Statement
+                .col-1
+                    h6 Tokens
+                .col-1
+                    h6 Votes
+            
         each statement in statements
             .row
                 .form-group.col-6
                     label= statement
                 .form-group.col-1
                     input.quadratic-voter(type="number", name="QuadraticVote", class="form-control", placeholder="0")
+                    
+                .form-group.col-1.votes-out
+                    span.btn.votes 0
 
         
         button(type="submit", class="btn btn-primary") Submit
 
     script.
+        
         $(".quadratic-voter").on('input', function () {
           var curr = $(this).val();
-          if(!(isNaN(curr)) && curr != '') {
-              //alert("Saving value " + $(this).val() + ". Previous value "  + $(this).data('previous-val'));
-              $(this).data('previous-val', $(this).val());
-              //$('#curr_tokens').text($('#curr_tokens').text() - 1);
+
+          if(!(isNaN(curr))) {
+              
+              var previous_val = $(this).data('previous-val');
+              if(previous_val === undefined) {previous_val = 0;};
+              
+              var curr_val = $(this).val();
+
+              var diff = Math.abs(curr_val) - Math.abs(previous_val);
+              var curr_tokens = $('#curr_tokens').text();
+              var new_tokens = curr_tokens - diff;
+
+              if(new_tokens <= #{input_amount} && new_tokens >= 0) {
+                  $(this).data('previous-val', curr_val);
+                  $('#curr_tokens').text(new_tokens);
+
+                  var votes = Math.sqrt(Math.abs(curr_val)).toFixed(2) * Math.sign(curr_val);
+                  $(this).parent().parent().children('.votes-out').children('span').text(votes);
+              } else {
+                  $(this).val(previous_val);
+              }
           }
         });
 	
