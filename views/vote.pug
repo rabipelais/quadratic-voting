@@ -43,10 +43,10 @@ block content
                 .form-group.col-8
                     label= statement
                 .form-check.form-check-inline
-                    input.form-check-input(type="radio", name="1VoteOptions", id="inlineCheckbox1", value="option1")
+                    input.form-check-input(type="radio", name="1VoteOptions"+statement, id="inlineCheckbox1", value="option1")
                     label.form-check-label(for="inlineCheckbox1") Y
                 .form-check.form-check-inline
-                    input.form-check-input(type="radio", name="1VoteOptions", id="inlineCheckbox2", value="option2")
+                    input.form-check-input(type="radio", name="1VoteOptions"+statement, id="inlineCheckbox2", value="option2")
                     label.form-check-label(for="inlineCheckbox2") N
                 
         h4 Quadratic Voting
