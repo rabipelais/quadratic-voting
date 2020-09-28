@@ -12,7 +12,7 @@ router.post('/create', function(req, res, next) {
         console.log(doc);
     });
     
-    res.json(req.body);
+    res.redirect('/');
 });
 
 module.exports = router
