@@ -1,6 +1,7 @@
 extends layout
 
 block content
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js")
     h1= title
     h2 Current Elections
     
@@ -9,8 +10,33 @@ block content
         each election in elections
             il.list-group-item
                 - const link = "election/vote/" + election.id
-                a(href=link)= election.doc.inputTitle
-                span(style='float: right')
-                    a(class='btn') Delete
-    p
-        a(class='btn btn-outline-secondary', href='/election/create', role='button') Create New Election
+                - const get_votes = "election/votes/" + election.id
+                h5= election.doc.inputTitle
+                a.btn.btn-link(href=link) Go to Vote
+                button.btn.btn-outline-info(data-clipboard-text=link, data-clipboard-action="copy", name="dl_csv") Copy Link
+                a.btn.btn-outline-success(href=get_votes) Download CSV
+                //span(style='float: right')
+                //    button.btn.btn-danger Delete
+
+    div
+        .row
+            p
+                a.btn.btn-outline-secondary(href='/election/create', role='button') Create New Election
+
+
+    script.
+        
+        window.onload = function() {
+          var dl_btns = document.getElementsByName("dl_csv");
+          for (i = 0; i < dl_btns.length; i++) {
+              console.log(window.location.href);
+              console.log(dl_btns[i].dataset.clipboardText);
+              dl_btns[i].dataset.clipboardText = window.location.href + dl_btns[i].dataset.clipboardText;
+          };
+          
+          new ClipboardJS('.btn');
+        };
+        
+        $( document ).ready(function() {
+          new ClipboardJS('.btn');
+        });
