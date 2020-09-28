@@ -61,6 +61,25 @@ exports.get_election = function(id, done) {
     });
 };
 
+exports.get_votes_for_election = function(id, done) {
+    const q = {
+        selector: {
+            electionId: {"$eq": id},
+        }
+    }
+    votes.find(q, function(err, body) {
+        console.log('Finding with query: ');
+        console.log(q);
+        if(!err) {
+            console.log("Getting votes for election: " + id);
+            console.log(body);
+            done(body);
+        } else {
+            console.log("Failed finding votes for: " + id);
+        }
+    })
+}
+
 exports.new_vote = function(doc, doc_name, done) {
     votes.insert(doc, uuidv4(), function(err, body) {
         console.log("Inserting " + doc_name);
