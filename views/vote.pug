@@ -5,6 +5,8 @@ block content
     h2= election_name
 
     form(method="post", action="/election/vote")
+        input(type="hidden", name="electionId", id="electionId", value=election_id)
+        input(type="hidden", name="electionName", id="electionName", value=election_name)
         h4 Personal Info
 
         .form-row
@@ -15,6 +17,7 @@ block content
             .form-group.col-md-6
                 label(for="inputOrientation") Sexual Orientation
                 select(type="text", class="form-control", name="inputOrientation", id="inputOrientation", placeholder="Sexual Orientation", required)
+                    option(disabled, selected, value) -- Select Orientation --
                     option(value="Other") Other
                     option(value="Homo") Lesbian/Gay
                     option(value="Hetero") Heterosexual
@@ -23,11 +26,12 @@ block content
         .form-row
             .form-group.col-md-6
                 label(for="inputAge") Age
-                input(type="Number", class="form-control", name="inputAge", id="inputAge", placeholder="18", required)
+                input(type="Number", class="form-control", name="inputAge", id="inputAge", placeholder="", required)
                 
             .form-group.col-md-6
                 label(for="inputOccupation") Occupation
                 select(type="text", class="form-control", name="inputOccupation", id="inputOccupation", placeholder="Occupation", required)
+                    option(disabled, selected, value) -- Select Occupation --
                     option(value="Student") Student
                     option(value="Self-employed") Self-employed
                     option(value="Employed") Employed
@@ -37,6 +41,7 @@ block content
             .form-group.col-md-6
                 label(for="inputGender") Gender
                 select(type="text", class="form-control", name="inputGender", id="inputGender", placeholder="Gender", required)
+                    option(disabled, selected, value) -- Select Gender --
                     option(value="Other") Other
                     option(value="Female") Female
                     option(value="Male") Male
@@ -45,6 +50,7 @@ block content
             .form-group.col-md-6
                 label(for="inputPolitical") Political Orientation
                 select(type="text", class="form-control", name="inputPolitical", id="inputPolitical", placeholder="Political Orientation", required)
+                    option(disabled, selected, value) -- Select Political Orientation --
                     option(value="Moderate") Moderate
                     option(value="Far left") Far left
                     option(value="Liberal") Liberal
@@ -53,7 +59,8 @@ block content
         
         .form-group
             label(for="inputNationality") Nationality
-            select(class="form-control", name="inputPolitical", id="inputNationality", placeholder="Nationality", required)
+            select(class="form-control", name="inputNationality", id="inputNationality", placeholder="Nationality", required)
+                option(disabled, selected, value) -- Select Nationality --
                 +country-list
 
 
@@ -63,10 +70,10 @@ block content
                 .form-group.col-8
                     label= statement
                 .form-check.form-check-inline
-                    input.form-check-input(type="radio", name="1VoteOptions"+statement, id="inlineCheckbox1", value="option1")
+                    input.form-check-input(type="radio", name="Vote - "+statement, id="inlineCheckbox1", value="Yes")
                     label.form-check-label(for="inlineCheckbox1") Y
                 .form-check.form-check-inline
-                    input.form-check-input(type="radio", name="1VoteOptions"+statement, id="inlineCheckbox2", value="option2")
+                    input.form-check-input(type="radio", name="Vote - "+statement, id="inlineCheckbox2", value="No")
                     label.form-check-label(for="inlineCheckbox2") N
                 
         h4 Quadratic Voting
