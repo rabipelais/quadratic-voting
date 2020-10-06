@@ -92,12 +92,12 @@ block content
                 .form-group.col-8
                     label= statement
                 .form-check.form-check-inline
-                    - var yes_val = [index, statement, "Y"]
-                    input.form-check-input(type="radio", name="Vote - 1", id="Vote - " + statement + " Y", value=yes_val, required)
+                    - var yes_val = [index, statement, "Yes"]
+                    input.form-check-input(type="radio", name="Vote1", id="Vote - " + statement + " Y", value=yes_val, required)
                     label.form-check-label(for="Vote - " + statement + " Y") Y
                 .form-check.form-check-inline
-                    - var no_val = [index, statement, "N"]
-                    input.form-check-input(type="radio", name="Vote - 1", id="Vote - " + statement + " N", value=no_val, required)
+                    - var no_val = [index, statement, "No"]
+                    input.form-check-input(type="radio", name="Vote1", id="Vote - " + statement + " N", value=no_val, required)
                     label.form-check-label(for="Vote - " + statement + " N") N
                 
         h4 Quadratic Voting
