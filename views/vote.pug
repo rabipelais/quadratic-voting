@@ -46,35 +46,59 @@ block content
                     option(value="Female") Female
                     option(value="Male") Male
                     option(value="Unknown") I'd rather not say
-                
-            .form-group.col-md-6
-                label(for="inputPolitical") Political Orientation
-                select(type="text", class="form-control", name="inputPolitical", id="inputPolitical", placeholder="Political Orientation", required)
-                    option(disabled, selected, value) -- Select Political Orientation --
-                    option(value="Moderate") Moderate
-                    option(value="Far left") Far left
-                    option(value="Liberal") Liberal
-                    option(value="Conservative") Conservative
-                    option(value="Far right") Far right
         
+            .form-group.col-md-6
+                label(for="inputNationality") Nationality
+                select(class="form-control", name="inputNationality", id="inputNationality", placeholder="Nationality", required)
+                    option(disabled, selected, value) -- Select Nationality --
+                    +country-list
         .form-group
-            label(for="inputNationality") Nationality
-            select(class="form-control", name="inputNationality", id="inputNationality", placeholder="Nationality", required)
-                option(disabled, selected, value) -- Select Nationality --
-                +country-list
+            h4 Do you identify with any of the following? (Check all that apply)
+            
+            .form-check
+                label.form-check-label
+                    input.form-check-input.check(type="checkbox", value="woman", name="identity", style="margin-top:0px")
+                    h6 Woman
 
+            .form-check
+                label.form-check-label(for="migration")
+                    input.form-check-input.check(type="checkbox", name="identity", id="migration", value="migration", style="margin-top:0px")
+                    h6 Migration History
+                
+            .form-check
+                label.form-check-label(for="entrepreneur")
+                    input.form-check-input.check(type="checkbox", name="identity", id="entrepreneur", value="entrepreneur", style="margin-top:0px")
+                    h6 Entrepreneur
+                
+            .form-check
+                label.form-check-label(for="lgbt")
+                    input.form-check-input.check(type="checkbox", name="identity", id="lgbt", value="lgbt", style="margin-top:0px")
+                    h6 LGBTQI+
+                
+            .form-check
+                label.form-check-label(for="researcher")
+                    input.form-check-input.check(type="checkbox", name="identity", id="researcher", value="researcher", style="margin-top:0px")
+                    h6 Researcher
+                    
+            .form-check
+                label.form-check-label
+                    input.form-check-input.none-check(type="checkbox", name="identity", value="none", style="margin-top:0px", checked)
+                    h6 None of the above
 
-        h4 1 Person - 1 Vote
-        each statement in statements
+        .form-group
+            h4 1 Person - 1 Vote
+        each statement, index in statements
             .form-row
                 .form-group.col-8
                     label= statement
                 .form-check.form-check-inline
-                    input.form-check-input(type="radio", name="Vote - "+statement, id="inlineCheckbox1", value="Yes")
-                    label.form-check-label(for="inlineCheckbox1") Y
+                    - var yes_val = [index, statement, "Y"]
+                    input.form-check-input(type="radio", name="Vote - 1", id="Vote - " + statement + " Y", value=yes_val, required)
+                    label.form-check-label(for="Vote - " + statement + " Y") Y
                 .form-check.form-check-inline
-                    input.form-check-input(type="radio", name="Vote - "+statement, id="inlineCheckbox2", value="No")
-                    label.form-check-label(for="inlineCheckbox2") N
+                    - var no_val = [index, statement, "N"]
+                    input.form-check-input(type="radio", name="Vote - 1", id="Vote - " + statement + " N", value=no_val, required)
+                    label.form-check-label(for="Vote - " + statement + " N") N
                 
         h4 Quadratic Voting
         - var curr_tokens_txt = input_amount
@@ -96,7 +120,7 @@ block content
                 .form-group.col-6
                     label= statement
                 .form-group.col-1
-                    input.quadratic-voter(type="number", name="QuadraticVote", class="form-control", placeholder="0")
+                    input.quadratic-voter(type="number", name="QuadraticVote", class="form-control", placeholder="0", required)
                     
                 .form-group.col-1.votes-out
                     span.btn.votes 0
@@ -131,6 +155,19 @@ block content
               }
           }
         });
+
+        $(".none-check").click(function() {
+          if($(this).prop("checked") == true) {
+              $('.check').prop('checked', false);
+          }
+        });
+
+        $(".check").click(function() {
+          if($(this).prop("checked") == true) {
+              $('.none-check').prop('checked', false);
+          }
+        });
+
 	
 mixin country-list
     option(value="Afghanistan") Afghanistan
