@@ -1,108 +1,216 @@
 extends layout
 
 block content
-    h1= title
-    h2= election_name
 
-    form(method="post", action="/election/vote")
-        input(type="hidden", name="electionId", id="electionId", value=election_id)
-        input(type="hidden", name="electionName", id="electionName", value=election_name)
-        h4 Personal Info
+    div.container
+        h1.text-center= title
+        h2.text-center= election_name
 
-        .form-row
-            .form-group.col-md-6
-                label(for="inputName") Name
-                input(type="text", class="form-control", name="inputName", id="inputName", placeholder="Name", required)
-                
-            .form-group.col-md-6
-                label(for="inputOrientation") Sexual Orientation
-                select(type="text", class="form-control", name="inputOrientation", id="inputOrientation", placeholder="Sexual Orientation", required)
-                    option(disabled, selected, value) -- Select Orientation --
-                    option(value="Other") Other
-                    option(value="Homo") Lesbian/Gay
-                    option(value="Hetero") Heterosexual
-                    option(value="Bi") Bisexual
-                    option(value="Unknown") I'd rather not say
-        .form-row
-            .form-group.col-md-6
-                label(for="inputAge") Age
-                input(type="Number", class="form-control", name="inputAge", id="inputAge", placeholder="", required)
-                
-            .form-group.col-md-6
-                label(for="inputOccupation") Occupation
-                select(type="text", class="form-control", name="inputOccupation", id="inputOccupation", placeholder="Occupation", required)
-                    option(disabled, selected, value) -- Select Occupation --
-                    option(value="Student") Student
-                    option(value="Self-employed") Self-employed
-                    option(value="Employed") Employed
-                    option(value="Unemployed") Unemployed
-                    option(value="Academia") Academia
-        .form-row
-            .form-group.col-md-6
-                label(for="inputGender") Gender
-                select(type="text", class="form-control", name="inputGender", id="inputGender", placeholder="Gender", required)
-                    option(disabled, selected, value) -- Select Gender --
-                    option(value="Other") Other
-                    option(value="Female") Female
-                    option(value="Male") Male
-                    option(value="Unknown") I'd rather not say
-                
-            .form-group.col-md-6
-                label(for="inputPolitical") Political Orientation
-                select(type="text", class="form-control", name="inputPolitical", id="inputPolitical", placeholder="Political Orientation", required)
-                    option(disabled, selected, value) -- Select Political Orientation --
-                    option(value="Moderate") Moderate
-                    option(value="Far left") Far left
-                    option(value="Liberal") Liberal
-                    option(value="Conservative") Conservative
-                    option(value="Far right") Far right
-        
-        .form-group
-            label(for="inputNationality") Nationality
-            select(class="form-control", name="inputNationality", id="inputNationality", placeholder="Nationality", required)
-                option(disabled, selected, value) -- Select Nationality --
-                +country-list
+        div
+            p Dear participant,
 
+            p Thank you very much for taking part on this research project! Your involvement is highly appreciated. This survey will take approximately 10 minutes.
 
-        h4 1 Person - 1 Vote
-        each statement in statements
-            .form-row
-                .form-group.col-8
-                    label= statement
-                .form-check.form-check-inline
-                    input.form-check-input(type="radio", name="Vote - "+statement, id="inlineCheckbox1", value="Yes")
-                    label.form-check-label(for="inlineCheckbox1") Y
-                .form-check.form-check-inline
-                    input.form-check-input(type="radio", name="Vote - "+statement, id="inlineCheckbox2", value="No")
-                    label.form-check-label(for="inlineCheckbox2") N
-                
-        h4 Quadratic Voting
-        - var curr_tokens_txt = input_amount
-        h5 Available Tokens: 
-          span#curr_tokens #{curr_tokens_txt}
-          span  / #{input_amount}
-          
-        .div
-            .row
-                .col-6
-                    h6 Statement
-                .col-1
-                    h6 Tokens
-                .col-1
-                    h6 Votes
+            p Before starting, PLEASE make sure you read this first and understand the voting mechanism!
             
-        each statement in statements
-            .row
-                .form-group.col-6
-                    label= statement
-                .form-group.col-1
-                    input.quadratic-voter(type="number", name="QuadraticVote", class="form-control", placeholder="0")
-                    
-                .form-group.col-1.votes-out
-                    span.btn.votes 0
+            p You will be tasked to vote between statements using 2 different mechanisms. First you will vote under the classical 1-Person-1-Vote mechanism, where you will be able to select one of the given statements. Then you will vote under the Quadratic Voting mechanism. Here you will be given a limited number of tokens that you can spend to buy votes. 1 vote will cost you 1 token, 2 votes will cost you 4 tokens, 3 votes will cost you 9 tokens (this is the quadratic part). It is up to you how you want to distribute your budget to better reflect your preferences but remember that the votes get more expensive every time!
 
+            h5 <b><u>1-P-1-V example:</u></b>
+            
+            p You are part of a schools committee and you must vote on a mascot. You are given the option to vote for something or against something. You are given the following options:
+            ol            
+              li A Monkey
+              li A Donkey
+              li A Dog
+              li A Wildcat
+              
+            p Because you adore the Monkey, but hate the Wildcat, you have to decide to whether vote FOR the Monkey or AGAINST the Wildcat, so when you fill in your ballot it could look like this:
+            table.table.table-borderless
+                thead
+                    th Animals
+                    th Vote
+                tbody
+                    td Monkey
+                    td 0
+                tbody
+                    td Donkey
+                    td 0
+                tbody
+                    td Dog
+                    td 0
+                tbody
+                    td Wildcat
+                    td Against
+
+            h5 <b><u>Quadratic Voting example:</u></b>
+            p You are part of a schools sports committee and you must vote on a mascot. You are given 100 tokens to vote on the following options:
+            ol            
+              li A Monkey
+              li A Donkey
+              li A Dog
+              li A Wildcat
+            p You prefer the monkey, like the donkey, are indifferent towards the dog and absolutely hate the wildcat. Therefore, you allocate your tokens the following way:
+            table.table.table-borderless
+                thead
+                    th Animals
+                    th Tokens
+                    th Vote
+                tbody
+                    td Monkey
+                    td 36
+                    td 6
+                tbody
+                    td Donkey
+                    td 14
+                    td 3.74
+                tbody
+                    td Dog
+                    td 0
+                    td 0
+                tbody
+                    td Wildcat
+                    td -50
+                    td -7.04
+
+            p Note how big the difference in total votes between the monkey and the wildcat is in the end (-1.04), regardless of the 14 tokens difference!
+                    
+            p <u><b>Important Note:</b></u>
+            p Please make sure to fill in as much information on the personal information section as possible, as this is going to be vital to analyze the results. You are more than welcome to pass your information on an anonymous basis and give a pseudonym instead of your real name. 
+            p Thank you in advance and have fun!
+
+        hr
         
-        button(type="submit", class="btn btn-primary") Submit
+        form(method="post", action="/election/vote")
+            input(type="hidden", name="electionId", id="electionId", value=election_id)
+            input(type="hidden", name="electionName", id="electionName", value=election_name)
+            
+            h4 Personal Info
+
+            .form-row
+                .form-group.col-md-6
+                    label(for="inputName") Name
+                    input(type="text", class="form-control", name="inputName", id="inputName", placeholder="Name", required)
+
+                .form-group.col-md-6
+                    label(for="inputOrientation") Sexual Orientation
+                    select(type="text", class="form-control", name="inputOrientation", id="inputOrientation", placeholder="Sexual Orientation", required)
+                        option(disabled, selected, value) -- Select Orientation --
+                        option(value="Other") Other
+                        option(value="Homo") Lesbian/Gay
+                        option(value="Hetero") Heterosexual
+                        option(value="Bi") Bisexual
+                        option(value="Unknown") I'd rather not say
+            .form-row
+                .form-group.col-md-6
+                    label(for="inputAge") Age
+                    input(type="Number", class="form-control", name="inputAge", id="inputAge", placeholder="", required)
+
+                .form-group.col-md-6
+                    label(for="inputOccupation") Occupation
+                    select(type="text", class="form-control", name="inputOccupation", id="inputOccupation", placeholder="Occupation", required)
+                        option(disabled, selected, value) -- Select Occupation --
+                        option(value="Student") Student
+                        option(value="Self-employed") Self-employed
+                        option(value="Employed") Employed
+                        option(value="Unemployed") Unemployed
+                        option(value="Academia") Academia
+            .form-row
+                .form-group.col-md-6
+                    label(for="inputGender") Gender
+                    select(type="text", class="form-control", name="inputGender", id="inputGender", placeholder="Gender", required)
+                        option(disabled, selected, value) -- Select Gender --
+                        option(value="Other") Other
+                        option(value="Female") Female
+                        option(value="Male") Male
+                        option(value="Unknown") I'd rather not say
+
+                .form-group.col-md-6
+                    label(for="inputNationality") Nationality
+                    select(class="form-control", name="inputNationality", id="inputNationality", placeholder="Nationality", required)
+                        option(disabled, selected, value) -- Select Nationality --
+                        +country-list
+
+            hr
+            
+            .form-group
+                h4 Do you identify with any of the following? (Check all that apply)
+
+                .form-check
+                    label.form-check-label
+                        input.form-check-input.check(type="checkbox", value="woman", name="identity", style="margin-top:0px")
+                        h6 Woman
+
+                .form-check
+                    label.form-check-label(for="migration")
+                        input.form-check-input.check(type="checkbox", name="identity", id="migration", value="migration", style="margin-top:0px")
+                        h6 Migration History
+
+                .form-check
+                    label.form-check-label(for="entrepreneur")
+                        input.form-check-input.check(type="checkbox", name="identity", id="entrepreneur", value="entrepreneur", style="margin-top:0px")
+                        h6 Entrepreneur
+
+                .form-check
+                    label.form-check-label(for="lgbt")
+                        input.form-check-input.check(type="checkbox", name="identity", id="lgbt", value="lgbt", style="margin-top:0px")
+                        h6 LGBTQI+
+
+                .form-check
+                    label.form-check-label(for="researcher")
+                        input.form-check-input.check(type="checkbox", name="identity", id="researcher", value="researcher", style="margin-top:0px")
+                        h6 Researcher
+
+                .form-check
+                    label.form-check-label
+                        input.form-check-input.none-check(type="checkbox", name="identity", value="none", style="margin-top:0px", checked)
+                        h6 None of the above
+
+            hr
+            
+            .form-group
+                h4 1 Person - 1 Vote (You can only choose <b>one</b>)
+                each statement, index in statements
+                    .form-row
+                        .form-group.col-8
+                            label= statement
+                        .form-check.form-check-inline
+                            - var yes_val = [index, statement, "Yes"]
+                            input.form-check-input(type="radio", name="Vote1", id="Vote - " + statement + " Y", value=yes_val, required)
+                            label.form-check-label(for="Vote - " + statement + " Y") Y
+                        .form-check.form-check-inline
+                            - var no_val = [index, statement, "No"]
+                            input.form-check-input(type="radio", name="Vote1", id="Vote - " + statement + " N", value=no_val, required)
+                            label.form-check-label(for="Vote - " + statement + " N") N
+
+            hr
+
+            h4 Quadratic Voting
+            - var curr_tokens_txt = input_amount
+            h5.text-center.font-weight-bold <u>Available Tokens: 
+              span#curr_tokens #{curr_tokens_txt}
+              span  / #{input_amount}</u>
+
+            .div
+                .row
+                    .col-6
+                        h6 <b>Statement</b>
+                    .col-2
+                        h6 <b>Tokens</b>
+                    .col-2
+                        h6 <b>Votes</b>
+
+            each statement in statements
+                .row
+                    .form-group.col-sm-6
+                        label= statement
+                    .form-group.col-sm-2
+                        input.quadratic-voter(type="number", name="QuadraticVote", class="form-control", placeholder="0", required)
+
+                    .form-group.col-sm-2.votes-out
+                        span.btn.votes 0
+
+
+            button(type="submit", class="btn btn-primary") Submit
 
     script.
         
@@ -131,6 +239,19 @@ block content
               }
           }
         });
+
+        $(".none-check").click(function() {
+          if($(this).prop("checked") == true) {
+              $('.check').prop('checked', false);
+          }
+        });
+
+        $(".check").click(function() {
+          if($(this).prop("checked") == true) {
+              $('.none-check').prop('checked', false);
+          }
+        });
+
 	
 mixin country-list
     option(value="Afghanistan") Afghanistan

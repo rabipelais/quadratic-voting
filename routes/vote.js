@@ -13,6 +13,7 @@ router.get('/vote/:electionId', function(req, res, next) {
 
 router.post('/vote', function(req, res, next) {
     db.new_vote(req.body, req.body.inputTitle, function(err, doc) {
+        console.log(body)
         console.log(doc);
     });
     
@@ -22,8 +23,10 @@ router.post('/vote', function(req, res, next) {
 function toCSV(election, votes) {
     var csv_rows = []
 
-    var header = ['Election name', 'Voter name', 'Sexual orientation', 'Age', 'Occupation', 'Gender', 'Political orientation', 'Nationality'];
-    
+    var identities = ['Woman', 'Migration', 'Entrepreneur', 'LGBT', 'Researcher'];
+    var header = ['Election name', 'Voter name', 'Sexual orientation', 'Age', 'Occupation', 'Gender', 'Nationality'];
+
+    header = header.concat(identities);
     header = header.concat(election.inputStatement.map(x => "1Vote " + x));
     header = header.concat(election.inputStatement.map(x => "Quadratic " + x));
     header.push("Max Tokens");
@@ -33,16 +36,40 @@ function toCSV(election, votes) {
     csv_rows.push(header);
 
     votes.docs.map(function(x) {
+        
         var entries = Object.values(x);
-        var row = entries.slice(3, entries.length - 1);
+        
+        var row = entries.slice(3, entries.length - 3); //ignore _id, _rev, electionId
+
+        //Add identities
+        id_res = identities.map(i => {
+            if(x.identity.includes(i.toLowerCase())) {
+                return "Yes";
+            } else {
+                return "No";
+            }
+        });
+
+        row = row.concat(id_res);
+        
+        //Add 1-vote results
+        vote = JSON.parse(x.Vote1);
+        votes_single = election.inputStatement.map(i => "Null");
+        votes_single[vote[0]] = vote[2];
+
+        row = row.concat(votes_single);
+        
+        //Add Quadratic Votes
         row = row.concat(x.QuadraticVote);
+
+        //Add some metadata
         row.push(election.inputAmount);
         row.push(election._id);
+        
         csv_rows.push(row);
     });
 
-    let csv_content = "data:text/csv;charset=utf-8," 
-        + csv_rows.map(e => e.join(",")).join("\n");
+    let csv_content = csv_rows.map(e => e.join(",")).join("\n");
     
     return csv_content;
 }

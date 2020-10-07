@@ -1,29 +1,30 @@
 extends layout
 
 block content
-    h1= title
-    
-    form(method="post")
-        
-        .form-group.row
-            label.col-form-label.col-sm-2(for="inputTitle") Election Title:
-            .col-sm-4
-                input(type="text", class="form-control", name="inputTitle", id="inputTitle", placeholder="Title")
+    div.container
+        h1= title
 
-        .form-group.row
-            button.btn.btn-outline-secondary.add Add Statement
-        
-        .form-group.row.statement
-            .col-sm-8
-                input(type="text", class="form-control", name="inputStatement", id="inputStatement", placeholder="New Statement")
-            button.btn.btn-danger.remove Delete
-            
-        .form-group.row
-            label.col-form-label.col-sm-2(for="inputAmount") Token Amount:
-            .col-sm-4
-                input(type="number", class="form-control", name="inputAmount", id="inputAmount", placeholder="Amount", required)
-                
-        button.btn.btn-primary(type="submit") Create Election
+        form(method="post")
+
+            .form-group.row
+                label.col-form-label.col-sm-2(for="inputTitle") Election Title:
+                .col-sm-4
+                    input(type="text", class="form-control", name="inputTitle", id="inputTitle", placeholder="Title", required)
+
+            .form-group.row
+                button.btn.btn-outline-secondary.add Add Statement
+
+            .form-group.row.statement
+                .col-sm-8
+                    input(type="text", class="form-control", name="inputStatement", id="inputStatement", placeholder="New Statement")
+                button.btn.btn-danger.remove Delete
+
+            .form-group.row
+                label.col-form-label.col-sm-2(for="inputAmount") Token Amount:
+                .col-sm-4
+                    input(type="number", class="form-control", name="inputAmount", id="inputAmount", placeholder="Amount", required)
+
+            button.btn.btn-primary(type="submit") Create Election
                 
             
     script.
