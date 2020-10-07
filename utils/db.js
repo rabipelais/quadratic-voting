@@ -61,6 +61,31 @@ exports.get_election = function(id, done) {
     });
 };
 
+exports.get_number_votes_for_elections = function(elections, done) {
+    function q(i) {
+        var t = {selector: {
+            electionId: {"$eq": i},
+        }};
+        return t;
+    }
+    votes_arr = {}
+    
+    elections.forEach(function(election) {
+        votes.find(q(election.id), function(err, body) {
+            if(!err) {
+                votes_arr[election.id] = body.docs.length;
+                console.log(votes_arr);
+            } else {
+                console.log("Failed finding votes for: " + id);
+            }
+        });
+    });
+    
+    console.log("ARSTARSTARSTARST");
+    console.log(votes_arr);
+    done(votes_arr);
+};
+
 exports.get_votes_for_election = function(id, done) {
     const q = {
         selector: {

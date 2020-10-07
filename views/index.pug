@@ -2,23 +2,26 @@ extends layout
 
 block content
     script(src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js")
-    h1= title
-    h2 Current Elections
-    
-    //Here dynamic list with elections
-    ul.list-group
-        each election in elections
-            il.list-group-item
-                - const link = "election/vote/" + election.id
-                - const get_votes = "election/votes/" + election.id
-                h5= election.doc.inputTitle
-                a.btn.btn-link(href=link) Go to Vote
-                button.btn.btn-outline-info(data-clipboard-text=link, data-clipboard-action="copy", name="dl_csv") Copy Link
-                a.btn.btn-outline-success(href=get_votes) Download CSV
-                //span(style='float: right')
-                //    button.btn.btn-danger Delete
+    div.container
+        h1= title
+        h2 Current Elections
 
-    div
+        //Here dynamic list with elections
+        .row
+            ul.list-group
+                each election, index in elections
+                    il.list-group-item
+                        - const link = "election/vote/" + election.id
+                        - const get_votes = "election/votes/" + election.id
+                        h5= election.doc.inputTitle
+                        a.btn.btn-link(href=link) Go to Vote
+                        button.btn.btn-outline-info(data-clipboard-text=link, data-clipboard-action="copy", name="dl_csv") Copy Link
+                        a.btn.btn-outline-success(href=get_votes) Download CSV
+                        //span(style='float: right')
+                        //    button.btn.btn-danger Delete
+
+
+        hr 
         .row
             p
                 a.btn.btn-outline-secondary(href='/election/create', role='button') Create New Election
