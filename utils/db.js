@@ -1,4 +1,4 @@
-var nano = require('nano')('http://localhost:5984');
+var nano = require('nano')('http://admin:021991312@localhost:5984');
 const { v4: uuidv4 } = require('uuid');
 
 nano.db.create('elections', function(err, body) {
