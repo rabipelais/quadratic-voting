@@ -15,7 +15,7 @@ router.get('/vote/:electionId', function(req, res, next) {
 router.post('/vote', function(req, res, next) {
     db.new_vote(req.body, req.body.inputTitle, function(err, doc) {
         console.log(doc);
-        res.redirect('/');
+        res.redirect('/election/thanks');
     });
 });
 
