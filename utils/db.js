@@ -68,22 +68,14 @@ exports.get_number_votes_for_elections = function(elections, done) {
         }};
         return t;
     }
-    votes_arr = {}
     
-    elections.forEach(function(election) {
-        votes.find(q(election.id), function(err, body) {
-            if(!err) {
-                votes_arr[election.id] = body.docs.length;
-                console.log(votes_arr);
-            } else {
-                console.log("Failed finding votes for: " + id);
-            }
-        });
+    queries = elections.map(e => {
+	return votes.find(q(e.id))
     });
-    
-    console.log("ARSTARSTARSTARST");
-    console.log(votes_arr);
-    done(votes_arr);
+
+    Promise.all(queries).then((values) => {
+	done(values.map(v => v.docs.length));
+    });
 };
 
 exports.get_votes_for_election = function(id, done) {
