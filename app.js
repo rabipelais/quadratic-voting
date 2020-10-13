@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var creatorRouter = require('./routes/create');
 var resultRouter = require('./routes/result');
 var voteRouter = require('./routes/vote');
+var thanksRouter = require('./routes/thanks');
 
 var bodyParser = require('body-parser');
 
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/election', creatorRouter);
+app.use('/election', thanksRouter);
 app.use('/election', resultRouter);
 app.use('/election', voteRouter);
 

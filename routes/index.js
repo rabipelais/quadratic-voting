@@ -7,8 +7,8 @@ var db = require("../utils/db.js");
 router.get('/', function(req, res, next) {
     db.list_elections(function(rows) {
 	db.get_number_votes_for_elections(rows, function(votes) {
+	    console.log(votes);
             res.render('index', { title: 'Awesome Quadratic Voting Page', elections: rows, votes: votes});
-	    
 	});
     });
 });
