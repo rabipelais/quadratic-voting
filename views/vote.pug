@@ -88,9 +88,9 @@ block content
 
             .form-row
                 .form-group.col-md-6
-                    label(for="inputName") Name
-                    input(type="text", class="form-control", name="inputName", id="inputName", placeholder="Name", required)
-
+                    label(for="inputAge") Age
+                    input(type="Number", class="form-control", name="inputAge", id="inputAge", placeholder="", required)
+		    
                 .form-group.col-md-6
                     label(for="inputOrientation") Sexual Orientation
                     select(type="text", class="form-control", name="inputOrientation", id="inputOrientation", placeholder="Sexual Orientation", required)
@@ -101,9 +101,6 @@ block content
                         option(value="Bi") Bisexual
                         option(value="Unknown") I'd rather not say
             .form-row
-                .form-group.col-md-6
-                    label(for="inputAge") Age
-                    input(type="Number", class="form-control", name="inputAge", id="inputAge", placeholder="", required)
 
                 .form-group.col-md-6
                     label(for="inputOccupation") Occupation
@@ -113,7 +110,8 @@ block content
                         option(value="Self-employed") Self-employed
                         option(value="Employed") Employed
                         option(value="Unemployed") Unemployed
-                        option(value="Academia") Academia
+                        option(value="Academia") Researcher/Scientist
+			option(value="Other") Other
             .form-row
                 .form-group.col-md-6
                     label(for="inputGender") Gender
