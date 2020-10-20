@@ -10,6 +10,10 @@ block content
                 label.col-form-label.col-sm-2(for="inputTitle") Election Title:
                 .col-sm-4
                     input(type="text", class="form-control", name="inputTitle", id="inputTitle", placeholder="Title", required)
+            
+            .form-group
+                label(for="electionDescription") Election Decription
+                textarea.form-control(id="electionDescription", name="electionDescription", rows="6", required)
 
             .form-group.row
                 button.btn.btn-outline-secondary.add Add Statement
@@ -23,6 +27,7 @@ block content
                 label.col-form-label.col-sm-2(for="inputAmount") Token Amount:
                 .col-sm-4
                     input(type="number", class="form-control", name="inputAmount", id="inputAmount", placeholder="Amount", required)
+
 
             button.btn.btn-primary(type="submit") Create Election
                 

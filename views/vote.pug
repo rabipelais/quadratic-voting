@@ -109,6 +109,11 @@ block content
 
 
         hr
+
+        h3.text-center <u>Election Context</u>
+        p= election_description
+
+        hr
         
         form(method="post", action="/election/vote")
             input(type="hidden", name="electionId", id="electionId", value=election_id)
