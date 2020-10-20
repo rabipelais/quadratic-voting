@@ -124,11 +124,11 @@ block content
             .form-row
                 .form-group.col-md-6
                     label(for="inputAge") Age
-                    input(type="Number", class="form-control", name="inputAge", id="inputAge", placeholder="", required)
+                    input(type="Number", class="form-control", name="voterAge", id="inputAge", placeholder="", required)
 		    
                 .form-group.col-md-6
                     label(for="inputOrientation") Sexual Orientation
-                    select(type="text", class="form-control", name="inputOrientation", id="inputOrientation", placeholder="Sexual Orientation", required)
+                    select(type="text", class="form-control", name="voterOrientation", id="inputOrientation", placeholder="Sexual Orientation", required)
                         option(disabled, selected, value) -- Select Orientation --
                         option(value="Other") Other
                         option(value="Homo") Lesbian/Gay
@@ -139,7 +139,7 @@ block content
 
                 .form-group.col-md-6
                     label(for="inputOccupation") Occupation
-                    select(type="text", class="form-control", name="inputOccupation", id="inputOccupation", placeholder="Occupation", required)
+                    select(type="text", class="form-control", name="voterOccupation", id="inputOccupation", placeholder="Occupation", required)
                         option(disabled, selected, value) -- Select Occupation --
                         option(value="Student") Student
                         option(value="Self-employed") Self-employed
@@ -150,7 +150,7 @@ block content
             .form-row
                 .form-group.col-md-6
                     label(for="inputGender") Gender
-                    select(type="text", class="form-control", name="inputGender", id="inputGender", placeholder="Gender", required)
+                    select(type="text", class="form-control", name="voterGender", id="inputGender", placeholder="Gender", required)
                         option(disabled, selected, value) -- Select Gender --
                         option(value="Other") Other
                         option(value="Female") Female
@@ -159,7 +159,7 @@ block content
 
                 .form-group.col-md-6
                     label(for="inputNationality") Nationality
-                    select(class="form-control", name="inputNationality", id="inputNationality", placeholder="Nationality", required)
+                    select(class="form-control", name="voterNationality", id="inputNationality", placeholder="Nationality", required)
                         option(disabled, selected, value) -- Select Nationality --
                         +country-list
 
@@ -170,32 +170,32 @@ block content
 
                 .form-check
                     label.form-check-label
-                        input.form-check-input.check(type="checkbox", value="woman", name="identity", style="margin-top:0px")
+                        input.form-check-input.check(type="checkbox", value="woman", name="voterIdentity", style="margin-top:0px")
                         h6 Woman
 
                 .form-check
                     label.form-check-label(for="migration")
-                        input.form-check-input.check(type="checkbox", name="identity", id="migration", value="migration", style="margin-top:0px")
+                        input.form-check-input.check(type="checkbox", name="voterIdentity", id="migration", value="migration", style="margin-top:0px")
                         h6 Migration History
 
                 .form-check
                     label.form-check-label(for="entrepreneur")
-                        input.form-check-input.check(type="checkbox", name="identity", id="entrepreneur", value="entrepreneur", style="margin-top:0px")
+                        input.form-check-input.check(type="checkbox", name="voterIdentity", id="entrepreneur", value="entrepreneur", style="margin-top:0px")
                         h6 Entrepreneur
 
                 .form-check
                     label.form-check-label(for="lgbt")
-                        input.form-check-input.check(type="checkbox", name="identity", id="lgbt", value="lgbt", style="margin-top:0px")
+                        input.form-check-input.check(type="checkbox", name="voterIdentity", id="lgbt", value="lgbt", style="margin-top:0px")
                         h6 LGBTQI+
 
                 .form-check
                     label.form-check-label(for="researcher")
-                        input.form-check-input.check(type="checkbox", name="identity", id="researcher", value="researcher", style="margin-top:0px")
+                        input.form-check-input.check(type="checkbox", name="voterIdentity", id="researcher", value="researcher", style="margin-top:0px")
                         h6 Researcher
 
                 .form-check
                     label.form-check-label
-                        input.form-check-input.none-check(type="checkbox", name="identity", value="none", style="margin-top:0px", checked)
+                        input.form-check-input.none-check(type="checkbox", name="voterIdentity", value="none", style="margin-top:0px", checked)
                         h6 None of the above
 
             hr

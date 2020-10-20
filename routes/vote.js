@@ -8,7 +8,7 @@ var fs = require('fs');
 /* GET users listing. */
 router.get('/vote/:electionId', function(req, res, next) {
     db.get_election(req.params.electionId, function(body) {
-        res.render('vote', {title: 'Vote', election_id: body._id, election_name: body.inputTitle, statements: body.inputStatement, input_amount: body.inputAmount, election_description: body.electionDescription});
+        res.render('vote', {title: 'Vote', election_id: body._id, election_name: body.electionTitle, statements: body.electionStatement, input_amount: body.electionTokenAmount, election_description: body.electionDescription});
     });
 });
 
