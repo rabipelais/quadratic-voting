@@ -111,7 +111,8 @@ block content
         hr
 
         h3.text-center <u>Election Context</u>
-        p= election_description
+        for line in election_description_lines
+            p= line
 
         hr
         

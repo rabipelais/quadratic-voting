@@ -14,7 +14,7 @@ block content
                         - const link = "election/vote/" + election.id
                         - const link_result = "election/result/" + election.id
                         - const get_votes = "election/votes/" + election.id
-                        h5= election.doc.inputTitle
+                        h5= election.doc.electionTitle
                         .row
                             a.btn.btn-link(href=link) Go to Vote
                             button.btn.btn-outline-info(data-clipboard-text=link, data-clipboard-action="copy", name="dl_csv") Copy Link
