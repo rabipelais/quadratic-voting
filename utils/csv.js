@@ -2,11 +2,11 @@ function toCSV(election, votes) {
     var csv_rows = []
 
     var identities = ['Woman', 'Migration', 'Entrepreneur', 'LGBT', 'Researcher'];
-    var header = ['Election name', 'Voter name', 'Sexual orientation', 'Age', 'Occupation', 'Gender', 'Nationality'];
+    var header = ['Election name',  'Age', 'Sexual orientation', 'Occupation', 'Gender', 'Nationality'];
 
     header = header.concat(identities);
-    header = header.concat(election.inputStatement.map(x => "1Vote " + x));
-    header = header.concat(election.inputStatement.map(x => "Quadratic " + x));
+    header = header.concat(election.electionStatement.map(x => "1Vote " + x));
+    header = header.concat(election.electionStatement.map(x => "Quadratic " + x));
     header.push("Max Tokens");
     header.push("Election ID");
 
@@ -16,12 +16,13 @@ function toCSV(election, votes) {
     votes.docs.map(function(x) {
         
         var entries = Object.values(x);
-        
-        var row = entries.slice(3, entries.length - 3); //ignore _id, _rev, electionId
+
+        //This is gonna lead to inconsistencies, generate the fields from the headers
+        var row = [election.electionName, x.voterAge, x.voterOrientation, x.voterOccupation, x.voterGender, x.voterNationality];
 
         //Add identities
         id_res = identities.map(i => {
-            if(x.identity.includes(i.toLowerCase())) {
+            if(x.voterIdentity.includes(i.toLowerCase())) {
                 return "Yes";
             } else {
                 return "No";
@@ -29,19 +30,16 @@ function toCSV(election, votes) {
         });
 
         row = row.concat(id_res);
-        
-        //Add 1-vote results
-        vote = JSON.parse(x.Vote1);
-        votes_single = election.inputStatement.map(i => "Null");
-        votes_single[vote[0]] = vote[2];
 
-        row = row.concat(votes_single);
+        //Add 1p1v
+        //REALLY HACKY, TODO: do this properly
+        row = row.concat(entries.slice(10, entries.length - 1))
         
         //Add Quadratic Votes
         row = row.concat(x.QuadraticVote);
 
         //Add some metadata
-        row.push(election.inputAmount);
+        row.push(election.electionTokenAmount);
         row.push(election._id);
         
         csv_rows.push(row);

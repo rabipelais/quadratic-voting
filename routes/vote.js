@@ -8,7 +8,8 @@ var fs = require('fs');
 /* GET users listing. */
 router.get('/vote/:electionId', function(req, res, next) {
     db.get_election(req.params.electionId, function(body) {
-        res.render('vote', {title: 'Vote', election_id: body._id, election_name: body.inputTitle, statements: body.inputStatement, input_amount: body.inputAmount});
+        var description_lines = body.electionDescription.split("\n");
+        res.render('vote', {title: 'Vote', election_id: body._id, election_name: body.electionTitle, statements: body.electionStatement, input_amount: body.electionTokenAmount, election_description_lines: description_lines});
     });
 });
 
@@ -24,7 +25,7 @@ router.get('/votes/:electionId', function(req, res, next) {
         db.get_votes_for_election(req.params.electionId, function(votes_body) {
             var csv_content = csv.to_csv(election_body, votes_body);
             
-            const file_name = election_body.inputTitle + ".csv";
+            const file_name = election_body.electionTitle + ".csv";
             
             fs.writeFile(file_name, csv_content, (err) => {
                 if (err) throw err;
