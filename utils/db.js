@@ -112,6 +112,14 @@ exports.delete_election = function(id, rev, done) {
     })
 };
 
+exports.delete_vote = function(id, rev, done) {
+    votes.destroy(id, rev).then((body) => {
+        done("Deleted " + id);
+    }, error => {
+        console.log(error);
+    })
+};
+
 exports.new_vote = function(doc, doc_name, done) {
     votes.insert(doc, uuidv4(), function(err, body) {
         console.log("Inserting " + doc_name);
