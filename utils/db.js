@@ -95,7 +95,15 @@ exports.get_votes_for_election = function(id, done) {
             console.log("Failed finding votes for: " + id);
         }
     })
-}
+};
+
+exports.delete_election = function(id, rev, done) {
+    elections.destroy(id, rev).then((body) => {
+        done("Deleted " + id);
+    }, error => {
+        console.log(error);
+    })
+};
 
 exports.new_vote = function(doc, doc_name, done) {
     votes.insert(doc, uuidv4(), function(err, body) {

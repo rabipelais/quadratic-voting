@@ -15,4 +15,10 @@ router.post('/create', function(req, res, next) {
     res.redirect('/');
 });
 
+router.post('/delete/:electionId/:electionRev', function(req, res, next) {
+    db.delete_election(req.params.electionId, req.params.electionRev, function(body) {
+        res.redirect('/');
+    });
+});
+
 module.exports = router
