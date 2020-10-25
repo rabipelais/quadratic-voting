@@ -23,6 +23,13 @@ var elections = nano.db.use('elections');
 var votes = nano.db.use('votes');
 
 exports.new_election = function(doc, doc_name, done) {
+    console.log("CREATING NEW ELECTION");
+    
+    if(typeof doc.electionStatement === 'string'
+       || doc.electionStatement instanceof String) {
+        doc.electionStatement = [doc.electionStatement];
+    };
+    
     elections.insert(doc, uuidv4(), function(err, body) {
         console.log("Inserting " + doc_name);
         if (!err) {
