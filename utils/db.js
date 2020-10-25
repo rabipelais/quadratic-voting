@@ -23,6 +23,13 @@ var elections = nano.db.use('elections');
 var votes = nano.db.use('votes');
 
 exports.new_election = function(doc, doc_name, done) {
+    console.log("CREATING NEW ELECTION");
+    
+    if(typeof doc.electionStatement === 'string'
+       || doc.electionStatement instanceof String) {
+        doc.electionStatement = [doc.electionStatement];
+    };
+    
     elections.insert(doc, uuidv4(), function(err, body) {
         console.log("Inserting " + doc_name);
         if (!err) {
@@ -95,7 +102,23 @@ exports.get_votes_for_election = function(id, done) {
             console.log("Failed finding votes for: " + id);
         }
     })
-}
+};
+
+exports.delete_election = function(id, rev, done) {
+    elections.destroy(id, rev).then((body) => {
+        done("Deleted " + id);
+    }, error => {
+        console.log(error);
+    })
+};
+
+exports.delete_vote = function(id, rev, done) {
+    votes.destroy(id, rev).then((body) => {
+        done("Deleted " + id);
+    }, error => {
+        console.log(error);
+    })
+};
 
 exports.new_vote = function(doc, doc_name, done) {
     votes.insert(doc, uuidv4(), function(err, body) {

@@ -20,9 +20,9 @@ block content
                             button.btn.btn-outline-info(data-clipboard-text=link, data-clipboard-action="copy", name="dl_csv") Copy Link
                             a.btn.btn-outline-success(href=get_votes) Download CSV
                             a.btn.btn-primary(href=link_result) View Results
+                            span(style='float: right')
+                                button.btn.btn-danger(data-toggle="modal", data-target="#exampleModal", data-title=election.doc.electionTitle, data-id=election.doc._id, data-rev=election.doc._rev) Delete
                         h6 Votes: #{votes[index]}
-                        //span(style='float: right')
-                        //    button.btn.btn-danger Delete
 
 
         hr 
@@ -31,7 +31,34 @@ block content
                 a.btn.btn-outline-secondary(href='/election/create', role='button') Create New Election
 
 
+        .modal.fade(id="exampleModal", tabindex="-1", role="dialog", aria-labelledby="exampleModalLabel", aria-hidden="true")
+            .modal-dialog(role="document")
+                .modal-content
+                    .modal-header
+                        h5(class="modal-title", id="exampleModalLabel") Delete election
+                        button(type="button", class="close", data-dismiss="modal", aria-label="Close")
+                            span(aria-hidden="true") &times;
+                    .modal-body
+                        p
+                    .modal-footer
+                        button(type="button", class="btn btn-secondary" data-dismiss="modal") Close
+                        form(action="dummy", method="post")
+                            button(type="submit", class="btn btn-primary") Delete
+
     script.
+        $('#exampleModal').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget); // Button that triggered the modal
+          var title = button.data('title'); // Extract info from data-* attributes
+          var id = button.data('id');
+          var rev = button.data('rev');
+          // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+          // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+          var modal = $(this)
+          modal.find('.modal-body p ').text('Are you sure you want to delete \"' + title + '\"' + " " + id + " " + rev);
+          var deleteLink = 'election/delete/' + id + "/" + rev
+          modal.find('.modal-footer form ').attr('action', deleteLink);
+          //modal.find('.modal-body input').val(recipient)
+        })
         
         window.onload = function() {
           var dl_btns = document.getElementsByName("dl_csv");
