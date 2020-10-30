@@ -9,7 +9,7 @@ block content
         div
             p Dear participant,
 
-            p Thank you very much for taking part on this research project! Your involvement is highly appreciated. This survey will take approximately 10 minutes.
+            p Thank you very much for taking part in this research project! Your involvement is highly appreciated. This survey will take approximately 10 minutes.
 
             p Before starting, <b>PLEASE</b> make sure you read this first and understand the voting mechanism! <b>Put your cellphone horizontally for better display!</b>
             
@@ -96,7 +96,7 @@ block content
                     td -20
                     td -4.47
 
-            p Note how big <b>the difference in total votes between “Latin Music” and “Sound System”</b> is in the end <b>(2,6 Votes)</b>, regardless of the 30 tokens difference! Please remember that high expenses of tokens come at a price.
+            p Note how small <b>the difference in total votes between “Latin Music” and “Sound System”</b> is in the end <b>(2,6 Votes)</b>, compared to the 30 tokens difference! Please remember that high expenses of tokens come at a price.
             
             h5 <b>Important Note:</b>
             
@@ -109,18 +109,12 @@ block content
 
 
         hr
-
-        h3.text-center <u>Election Context</u>
-        for line in election_description_lines
-            p= line
-
-        hr
         
         form(method="post", action="/election/vote")
             input(type="hidden", name="electionId", id="electionId", value=election_id)
             input(type="hidden", name="electionName", id="electionName", value=election_name)
             
-            h4 Personal Info
+            h4 <u>Personal Info</u>
 
             .form-row
                 .form-group.col-md-6
@@ -165,9 +159,59 @@ block content
                         +country-list
 
             hr
+
+            h4 <u>Election Context</u>
+            
+            for line in election_description_lines
+                p= line
+
+            hr
             
             .form-group
-                h4 Do you identify with any of the following? (Check all that apply)
+                h4 <u>1 Person - 1 Vote</u>
+                each statement, index in statements
+                    .form-row
+                        .form-group.col-8
+                            label= statement
+                        .form-check.form-check-inline
+                            input.form-check-input(type="radio", name="Vote1 - " + statement, id="Vote - " + statement + " Y", value="Yes", required)
+                            label.form-check-label(for="Vote - " + statement + " Y") Yes
+                        .form-check.form-check-inline
+                            input.form-check-input(type="radio", name="Vote1 - " + statement, id="Vote - " + statement + " M", value="Neutral", required)
+                            label.form-check-label(for="Vote - " + statement + " M") Neutral
+                        .form-check.form-check-inline
+                            input.form-check-input(type="radio", name="Vote1 - " + statement, id="Vote - " + statement + " N", value="No", required)
+                            label.form-check-label(for="Vote - " + statement + " N") No
+
+            hr
+
+            h4 <u>Quadratic Voting</u>
+            - var curr_tokens_txt = input_amount
+            h5.text-center.font-weight-bold <u>Available Tokens: 
+              span#curr_tokens #{curr_tokens_txt}
+              span  / #{input_amount}</u>
+
+            .div
+                .row
+                    .col-6
+                        h6 <b>Statement</b>
+                    .col-2
+                        h6 <b>Tokens</b>
+                    .col-2
+                        h6 <b>Votes</b>
+
+            each statement in statements
+                .row
+                    .form-group.col-sm-6
+                        label= statement
+                    .form-group.col-sm-2
+                        input.quadratic-voter(type="number", name="QuadraticVote", class="form-control", placeholder="0", required)
+
+                    .form-group.col-sm-2.votes-out
+                        span.btn.votes 0
+            
+            .form-group
+                h4 <u>Do you identify with any of the following? (Check all that apply)</u>
 
                 .form-check
                     label.form-check-label
@@ -200,49 +244,6 @@ block content
                         h6 None of the above
 
             hr
-            
-            .form-group
-                h4 1 Person - 1 Vote (You can only choose <b>one</b>)
-                each statement, index in statements
-                    .form-row
-                        .form-group.col-8
-                            label= statement
-                        .form-check.form-check-inline
-                            input.form-check-input(type="radio", name="Vote1 - " + statement, id="Vote - " + statement + " Y", value="Yes", required)
-                            label.form-check-label(for="Vote - " + statement + " Y") Yes
-                        .form-check.form-check-inline
-                            input.form-check-input(type="radio", name="Vote1 - " + statement, id="Vote - " + statement + " M", value="Neutral", required)
-                            label.form-check-label(for="Vote - " + statement + " M") Neutral
-                        .form-check.form-check-inline
-                            input.form-check-input(type="radio", name="Vote1 - " + statement, id="Vote - " + statement + " N", value="No", required)
-                            label.form-check-label(for="Vote - " + statement + " N") No
-
-            hr
-
-            h4 Quadratic Voting
-            - var curr_tokens_txt = input_amount
-            h5.text-center.font-weight-bold <u>Available Tokens: 
-              span#curr_tokens #{curr_tokens_txt}
-              span  / #{input_amount}</u>
-
-            .div
-                .row
-                    .col-6
-                        h6 <b>Statement</b>
-                    .col-2
-                        h6 <b>Tokens</b>
-                    .col-2
-                        h6 <b>Votes</b>
-
-            each statement in statements
-                .row
-                    .form-group.col-sm-6
-                        label= statement
-                    .form-group.col-sm-2
-                        input.quadratic-voter(type="number", name="QuadraticVote", class="form-control", placeholder="0", required)
-
-                    .form-group.col-sm-2.votes-out
-                        span.btn.votes 0
 
 
             button(type="submit", class="btn btn-primary") Submit

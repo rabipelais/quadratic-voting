@@ -14,15 +14,24 @@ block content
                         - const link = "election/vote/" + election.id
                         - const link_result = "election/result/" + election.id
                         - const get_votes = "election/votes/" + election.id
-                        h5= election.doc.electionTitle
-                        .row
-                            a.btn.btn-link(href=link) Go to Vote
-                            button.btn.btn-outline-info(data-clipboard-text=link, data-clipboard-action="copy", name="dl_csv") Copy Link
-                            a.btn.btn-outline-success(href=get_votes) Download CSV
-                            a.btn.btn-primary(href=link_result) View Results
-                            span(style='float: right')
-                                button.btn.btn-danger(data-toggle="modal", data-target="#exampleModal", data-title=election.doc.electionTitle, data-id=election.doc._id, data-rev=election.doc._rev) Delete
-                        h6 Votes: #{votes[index]}
+                        .container
+                            .row
+                                h5= election.doc.electionTitle
+                            .row
+                                .col-md
+                                    a.btn.btn-link(href=link) Go to Vote
+                                .col-md
+                                    button.btn.btn-outline-info(data-clipboard-text=link, data-clipboard-action="copy", name="dl_csv") Copy Link
+                                .col-md
+                                    a.btn.btn-outline-success(href=get_votes) Download CSV
+                                .col-md    
+                                    a.btn.btn-primary(href=link_result) View Results
+                                .col-md
+                                    span(style='float: right')
+                                        button.btn.btn-danger(data-toggle="modal", data-target="#exampleModal", data-title=election.doc.electionTitle, data-id=election.doc._id, data-rev=election.doc._rev) Delete
+
+                            .row
+                                h6 Votes: #{votes[index]}
 
 
         hr 
