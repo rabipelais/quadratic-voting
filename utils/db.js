@@ -72,7 +72,8 @@ exports.get_number_votes_for_elections = function(elections, done) {
     function q(i) {
         var t = {selector: {
             electionId: {"$eq": i},
-        }};
+        },
+        limit: 10000};
         return t;
     }
     
@@ -89,7 +90,8 @@ exports.get_votes_for_election = function(id, done) {
     const q = {
         selector: {
             electionId: {"$eq": id},
-        }
+        },
+        limit: 10000
     }
     votes.find(q, function(err, body) {
         console.log('Finding with query: ');

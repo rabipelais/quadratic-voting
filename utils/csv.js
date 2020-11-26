@@ -33,7 +33,7 @@ function toCSV(election, votes) {
 
         //Add 1p1v
         //REALLY HACKY, TODO: do this properly
-        row = row.concat(entries.slice(10, entries.length - 1))
+        row = row.concat(entries.slice(9, entries.length - 2))
         
         //Add Quadratic Votes
         row = row.concat(x.QuadraticVote);
